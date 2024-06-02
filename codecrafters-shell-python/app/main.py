@@ -7,6 +7,22 @@ def echo(args):
 def exit0():
     quit()
 
+def type(args):
+    paths = os.environ.get("PATH").split(":")
+    commands = ["echo", "exit", "type"]
+    cmd = args[0]
+    path = None
+    for i in paths:
+        if os.path.isfile(f"{i}/{cmd}"):
+            path = f"{i}/{cmd}"
+    if args[0] in commands:
+        sys.stdout.write(f"{cmd} is a shell builtin\n")
+    elif path:
+        sys.stdout.write(f"{cmd} is {path}\n")
+    else:
+        sys.stdout.write(f"{cmd} not found\n")
+
+
 def main():
 
     commands = ["echo", "exit", "type"]
@@ -21,18 +37,7 @@ def main():
         elif cmd=="echo":
             echo(args)
         elif cmd=="type":
-            cmd = args[0]
-            path = None
-            for i in paths:
-                if os.path.isfile(f"{i}/{cmd}"):
-                    path = f"{i}/{cmd}"
-            if args[0] in commands:
-                sys.stdout.write(f"{cmd} is a shell builtin\n")
-            elif path:
-                sys.stdout.write(f"{cmd} is {path}\n")
-            else:
-                sys.stdout.write(f"{cmd} not found\n")
-
+            type(args)
         else:
             sys.stdout.write(f"{cmd}: command not found\n")
         sys.stdout.flush()
@@ -40,3 +45,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

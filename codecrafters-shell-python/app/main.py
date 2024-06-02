@@ -22,6 +22,11 @@ def type(args):
     else:
         sys.stdout.write(f"{cmd} not found\n")
 
+def pwd():
+    sys.stdout.write(f"{os.getcwd()}\n")
+
+def run_program(command):
+    os.system(command)
 
 def main():
 
@@ -38,6 +43,10 @@ def main():
             echo(args)
         elif cmd=="type":
             type(args)
+        elif cmd=="pwd":
+            pwd()
+        elif os.path.isfile(cmd):
+            run_program(command)
         else:
             sys.stdout.write(f"{cmd}: command not found\n")
         sys.stdout.flush()
@@ -45,4 +54,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+    
